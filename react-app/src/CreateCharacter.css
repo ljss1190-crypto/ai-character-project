@@ -1,0 +1,104 @@
+
+
+/* ===== ① 캐릭터 생성 페이지 전체 ===== */ 
+
+.create-page {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px 40px 80px;
+}
+
+/* ===== ② 생성 페이지 상단 ===== */
+
+.create-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+/* 캐릭터 만들기 제목 */
+
+.create-header h2 {
+    margin: 0;
+    font-size: 28px;
+}
+
+/* 생성 버튼 */
+
+.create-header button {
+    background-color: #c084fc;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+/* ===== ③ 캐릭터 생성 단계 탭 ===== */
+
+.create-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 45px;
+    margin-bottom: 40px;
+    border-bottom: 1px solid #333333;
+}
+
+/* 페르소나, 스토리, 스타일, 설정 버튼 */
+
+.create-tabs button {
+    background: none;
+    color: #aaaaaa;
+    border: none;
+    padding: 14px 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* 탭 버튼에 마우스를 올렸을 떄 */
+
+.create-tabs button:hover {
+    color: white;
+}
+
+/* ===== ④ 현재 선택된 탭 ===== */
+
+.create-tabs button.active {
+    color: #c084fc;
+    border-bottom: 2px solid #c084fc;
+}
+
+/* ===== ⑤ 페르소나 입력 영역 ===== */
+
+.persona-form h3 {
+    margin: 0 0 30px;
+}
+
+/* 각각의 입력 항목 */
+
+.form-group {
+    margin-bottom: 30px;
+}
+
+/* 입력 항목 제목 */
+
+.form-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+/* 캐릭터 이름 입력칸 */
+
+.form-group input {
+    width: 100%;
+    padding: 14px;
+    background-color: #1c1c1c;
+    color: white;
+    border: 1px solid #333333;
+    border-radius: 8px;
+    font-size: 15px;
+}
+

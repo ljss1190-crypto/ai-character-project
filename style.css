@@ -1,0 +1,58 @@
+
+
+/* 공통 디자인 */
+
+body {
+    margin: 0;
+    background-color: #111111;
+    color: white;
+}
+
+/* ==== 상단 메뉴 영역 ====*/
+header {
+    display: flex;           /* 안의 요소들을 가로로 배치 */
+    align-items: center;     /* 세로 방향 가운데 정렬 */
+    padding: 20px 40px;      /* 위아래 20px, 좌우 40px 여백*/
+}
+
+/* 사이트 이름*/
+header h1 {
+    margin: 0;
+    color: #c084fc;
+    font-size: 32px;
+}
+
+/* 홈, 탐색, 캐릭터 만들기 메뉴 */
+nav {
+    display: flex;            /* 메뉴들을 가로로 배치*/
+    gap: 30px;                /* 메뉴 사이의 간격 */
+    margin-left: 50px;        /* 로고와 메뉴 사이의 간격*/
+}
+
+/* 상단 메뉴 링크 클릭 */
+nav a {
+    color: white;           /* 글자색을 흰색으로 */
+    text-decoration: none;    /* 링크 밑줄 제거 */
+}
+
+/* 메뉴에 마우스 올렸을 때 */
+nav a:hover {
+    color: #8b5cf6;         /* 보라색으로 변경 */
+}
+
+/* 로그인 버튼*/
+header button {
+    margin-left: auto;           /* 로그인 버튼을 오른쪽 끝으로 밀기*/
+    background-color: #c084fc; /* 보라색 배경 */
+    color: white;              /* 글자색 */
+    border: none;                /* 기본 테두리 제거 */
+    padding: 10px 18px;          /* 버튼 안쪽 여백 */
+    border-radius: 8px;          /* 모서리를 둥글게 */
+    cursor: pointer;             /* 마우스 올리면 손가락 모양 */
+}
+
+/* 로그인 버튼에 마우스를 올렸을 때 */
+header button:hover {
+    opacity: 0.8;
+}
+

@@ -1,0 +1,111 @@
+
+
+/* App.css
+→ 실제 화면 디자인
+→ 헤더, 메뉴, 버튼, 캐릭터 카드 등 */
+
+/* ===== ① 상단 메뉴 전체 영역 ===== */
+
+header {
+  display: flex;             /* 안의 요소들을 기본적으로 가로방향으로 배치 */
+  align-items: center;       /* 요소들을 세로 방향 가운데로 맞춤 */
+  padding: 20px 40px;        /* 안쪽 여백: 위아래 20px, 좌우 40px */
+}
+
+/* ===== ② 사이트 이름 ===== */
+
+header h1 {
+  margin: 0;                 /* h1에 기본으로 들어있는 바깥 여백을 없앰 */
+  color: #c084fc;          /* 글자색을 보라색으로 지정 */
+  font-size: 32px;           /* 글자 크기를 32px로 설정 */
+}
+
+/* ===== ③ 상단 이동 메뉴 ===== */
+
+nav {
+  display: flex;            /* nav 안의 링크들을 가로 방향으로 배치 */
+  gap: 30px;                /* 링크와 링크 사이의 간격을 30px로 설정 */
+  margin-left: 50px;        /* nav의 왼쪽 바깥 여백을 50px로 설정 */
+}
+
+/* ===== ④ 상단 메뉴 링크 ===== */
+
+nav a {
+  color: white;           /* 링크 글자색을 흰색으로 설정 */
+  text-decoration: none;    /* 링크에 기본으로 생기는 밑줄을 없앰 */
+}
+
+/* 메뉴에 마우스를 올렸을 때 */
+
+nav a:hover {
+  color: #c084fc;         /* 마우스를 올리면 글자색을 보라색으로 변경 */
+}
+
+/* ===== ⑤ 로그인 버튼 ===== */
+
+header button {
+  margin-left: auto;         /* 남는 왼쪽 공간을 차지해서 버튼을 오른쪽 끝으로 보냄 */
+  background-color: #c084fc; /* 버튼의 배경색을 보라색으로 설정 */
+  color: white;              /* 버튼 안의 글자색을 흰색으로 설정 */
+  border: none;              /* 버튼에 기본으로 있는 테두리를 없앰 */
+  padding: 10px 18px;        /* 버튼 안쪽 여백: 위아래 10px, 좌우 18px */
+  border-radius: 8px;        /* 버튼의 모서리를 8px만큼 둥글게 만듦 */
+  cursor: pointer;           /* 마우스를 올리면 손가락 모양 커서로 변경 */
+}
+
+/* 로그인 버튼에 마우스를 올렸을 때 */
+
+header button:hover {
+  opacity: 0.8;              /* 버튼을 살짝 투명하게 만들어 마우스 반응을 보여줌 */
+}
+
+/* ===== ⑥ 추천 캐릭터 영역 ===== */
+
+.character-section {
+  padding: 30px 40px;        /* 안쪽 여백: 위아래 30px, 좌우 40px */
+}
+
+/* 추천 캐릭터 제목 */
+.character-section h2 {
+  margin: 0;                 /* h2에 기본으로 들어있는 바깥 여백을 없앰 */
+  margin-bottom: 20px;       /* 제목 아래쪽에 20px 바깥 여백을 만듦 */
+  font-size: 24px;           /* 제목 글자 크기를 24px로 설정 */
+}
+
+/* ===== ⑦ 캐릭터 카드 목록 ===== */
+
+.chracter-list {
+  display: flex;             /* 캐릭터 카드들을 가로 방향으로 배치 */ 
+  gap: 20px;                 /* 카드와 카드 사이의 간격을 20px로 설정 */
+}
+
+/* ===== ⑧ 캐릭터 카드 한 장 ===== */
+
+.character-card {            
+  width: 220px;             /* 카드의 가로 크기를 220px로 설정 */
+  background-color: #1c1c1c; /* 카드의 배경을 본문보다 조금 밝게 설정 */
+  border-radius: 12px;      /* 카드의 모서리를 둥글게 만듬 */
+  overflow: hidden;         /* 카드 밖으로 튀어나오는 내용을 숨김 */
+}
+
+/* ===== ⑨ 캐릭터 이미지 영역 ===== */
+
+.character-image {          
+  width: 100px;             /* 이미지 영역을 카드의 가로 넓이에 꽉 채움 */
+  height: 280px;            /* 이미지 영역의 세로 높이를 280px로 설정 */
+  background-color: #333333; /* 실제 이미지 전까지 회색으로 영역을 표시 */
+}
+
+/* 캐릭터 이름 */
+.character-card h3 {
+  margin: 15px 15px 8px;     /* 이름 주변의 바깥 여백 설정 */
+  font-size: 18px;           /* 캐릭터 이름의 글자 크기 */
+}
+
+/* 캐릭터 소개 */
+.character-card p {
+  margin: 0 15px 15px;        /* 소개 글 주변의 바깥 여백 설정 */
+  color: #aaaaaa;           /* 소개 글자는 이름보다 연한 회색으로 설정 */
+  font-size: 14px;            /* 소개 글자 크기를 14px로 설정 */
+}
+
