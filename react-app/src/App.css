@@ -74,7 +74,7 @@ header button:hover {
 
 /* ===== ⑦ 캐릭터 카드 목록 ===== */
 
-.chracter-list {
+.character-list {
   display: flex;             /* 캐릭터 카드들을 가로 방향으로 배치 */ 
   gap: 20px;                 /* 카드와 카드 사이의 간격을 20px로 설정 */
 }
@@ -91,7 +91,7 @@ header button:hover {
 /* ===== ⑨ 캐릭터 이미지 영역 ===== */
 
 .character-image {          
-  width: 100px;             /* 이미지 영역을 카드의 가로 넓이에 꽉 채움 */
+  width: 100%;             /* 이미지 영역을 카드의 가로 넓이에 꽉 채움 */
   height: 280px;            /* 이미지 영역의 세로 높이를 280px로 설정 */
   background-color: #333333; /* 실제 이미지 전까지 회색으로 영역을 표시 */
 }

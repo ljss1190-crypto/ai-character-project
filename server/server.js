@@ -1,14 +1,16 @@
 
 
 const express = require('express');          // ① 설치한 Express를 이 파일에서 사용하기 위해 불러옴
+const cors = require('cors');                //   다른 주소의 프론트와 서버가 통신할 수 있게 함
 
 const app = express();                       // ② Express를 실행해서 백엔드 서버를 만듬
 
-app.use(express.json());                     // ③ 프론트에서 보낸 JSON 데이터를 서버가 읽을 수 있게 함
+app.use(cors());                             // ③ CORS를 사용하여 다른 주소의 프론트와 서버가 통신할 수 있게 함
+app.use(express.json());                     // ④ 프론트에서 보낸 JSON 데이터를 서버가 읽을 수 있게 함
 
-const port = 3000;                           // ④ 서버가 사용할 포트 번호를 3000으로 정함
+const port = 3000;                           // ⑤ 서버가 사용할 포트 번호를 3000으로 정함
 
-const characters = [];                       // ⑤ 캐릭터 정보를 임시로 저장할 배열
+const characters = [];                       // ⑥ 캐릭터 정보를 임시로 저장할 배열
 
 // ⑥ 캐릭터 생성 요청을 받는 곳
 app.post('/characters', (req, res) => {
