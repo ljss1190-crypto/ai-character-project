@@ -72,7 +72,8 @@
 
 /* ===== ⑤ 페르소나 입력 영역 ===== */
 
-.persona-form h3 {
+.persona-form h3,
+.story-form h3 {
     margin: 0 0 30px;
 }
 
@@ -100,5 +101,89 @@
     border: 1px solid #333333;
     border-radius: 8px;
     font-size: 15px;
+}
+
+/* 캐릭터 이미지 추가 영역 */
+.image-upload {
+    width: 120px;
+    height: 150px;
+    display: block;
+    background-color: #1c1c1c;
+    color: #aaaaaa;
+    border: 1px dashed #555555;
+    border-radius: 10px;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+/* 입력 영역 아래 설명 */
+.form-group p {
+    margin: 8px 0 0;
+    color: #888888;
+    font-size: 13px;
+}
+
+/* 성별 버튼 영역 */
+.gender-buttons {
+    display: flex;
+    gap: 16px;
+}
+
+/* 성별 버튼 */
+.gender-buttons button {
+    padding: 10px 22px;
+    background-color: #1c1c1c;
+    color: #aaaaaa;
+    border: 1px solid #333333;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* 성별 버튼에 마우스를 올렸을 때 */
+.gender-buttons button:hover {
+    border-color: #c084fc;
+    color: white;
+}
+
+/* 선택한 성별 버튼 */
+.gender-buttons button.selected {
+    background-color: #c084fc;
+    border-color: #c084fc;
+    color: white;
+}
+
+/* 여러 줄 입력칸 */
+.form-group textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 14px;
+    background-color: #1c1c1c;
+    color: white;
+    border: 1px solid #333333;
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: inherit;
+    resize: vertical;
+}
+
+/* 페르소나와 스토리 입력 영역 너비 */
+.persona-form,
+.story-form {
+    width: 100%;
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+/* 나이 입력칸은 다른 입력칸보다 짧게 */
+#character-age {
+    max-width: 220px;
+}
+
+/* 글자 수 표시 */
+.character-count {
+    margin-top: 6px;
+    text-align: right;
+    color: #888888;
+    font-size: 13px;
 }
 
