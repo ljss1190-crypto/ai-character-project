@@ -20,8 +20,34 @@ function CreateCharacter () {                 // ① 캐릭터 생성 화면 컴
     const [worldIntroduction, setWorldIntroduction] = useState('');
     const [firstGreeting, setFirstGreeting] = useState('');
 
+                                                                
+    const [characterImage, setCharacterImage] = useState(null); // 선택한 캐릭터 이미지를 저장
+    const [errors, setErrors] = useState({});
+
 
     function handleCreate () {
+
+        const newErrors = {
+            name: name.trim() === '',
+            gender: gender === '',
+            introduction: introduction.trim() === '',
+            title: title.trim() === '',
+            worldIntroduction: worldIntroduction.trim() === '',
+            firstGreeting: firstGreeting.trim() === '',
+        };
+        
+        setErrors(newErrors);
+
+        if (
+            newErrors.name || 
+            newErrors.gender || 
+            newErrors.introduction || 
+            newErrors.title || 
+            newErrors.worldIntroduction || 
+            newErrors.firstGreeting
+        ) {
+            return;
+        }
 
     const character = {
 
@@ -75,40 +101,103 @@ function CreateCharacter () {                 // ① 캐릭터 생성 화면 컴
             {/* ⑮ 캐릭터 이미지 */}
         <div className="form-group">
             <label>캐릭터 이미지</label>
-            <button className="image-upload">+</button>
+            {/* 이미지 파일을 선택하는 입력칸 */}
+            <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => setCharacterImage(e.target.files[0])}
+            />
+            {/* 선택한 캐릭터 이미지가 있으면 미리보기로 표시 */}
+            {characterImage && (
+                    <img
+                        src={URL.createObjectURL(characterImage)}
+                        alt="캐릭터 이미지 미리보기"
+                        className="character-image-preview"
+                    />
+                )}
             <p>캐릭터를 대표할 이미지를 추가해주세요.</p>
         </div>
 
             {/* ⑯ 캐릭터 이름 */}
         <div className="form-group">
-            <label htmlFor="character-name">캐릭터 이름</label>
+            <label htmlFor="character-name">
+                캐릭터 이름 <span className="required">*</span>
+                </label>
+
             <input
                 id="character-name"
                 type="text"
-                placeholder="캐릭터 이름을 입력해주세요."
+                className={errors.name ? 'error' : ''}
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => {
+                    setName(e.target.value);
+
+                    // 캐릭터 이름을 입력하면 오류 표시를 바로 없앰
+                    if (e.target.value.trim() !== '') {
+                        setErrors({
+                            ...errors,
+                            name: false,
+                        });
+                    }
+                }}
+
                 maxLength={20}
+                placeholder="캐릭터 이름을 입력해주세요."
             />
             <p className="character-count">{name.length} / 20</p>
         </div>
 
             {/* 캐릭터 성별 */}
         <div className="form-group">
-            <label>성별</label>
+            <label>
+                성별 <span className="required">*</span>
+                </label>
 
-            <div className="gender-buttons">
+            <div className={errors.gender ? 'gender-buttons error' : 'gender-buttons'}>
                 <button
                     className={gender === '여성' ? 'selected' : ''}
-                    onClick={() => setGender('여성')}>여성</button>
+                    onClick={() => {
+                        setGender('여성');
+
+                    // 성별을 선택하면 오류 표시를 바로 없앰
+                    setErrors({
+                        ...errors,
+                        gender: false,
+                    });
+                }}
+            >
+                여성
+            </button>
 
                 <button
                     className={gender === '남성' ? 'selected' : ''}
-                    onClick={() => setGender('남성')}>남성</button>
+                    onClick={() => {
+                        setGender('남성');
+
+                        // 성별을 선택하면 오류 표시를 바로 없앰
+                        setErrors({
+                            ...errors,
+                            gender: false,
+                        });
+                    }}
+                >
+                    남성
+                </button>
 
                 <button
                     className={gender === '기타' ? 'selected' : ''}
-                    onClick={() => setGender('기타')}>기타</button>
+                    onClick={() => {
+                        setGender('기타');
+
+                        // 성별을 선택하면 오류 표시를 바로 없앰
+                        setErrors({
+                            ...errors,
+                            gender: false,
+                        });
+                    }}
+                >
+                    기타
+                </button>
             </div>
         </div>
 
@@ -118,22 +207,35 @@ function CreateCharacter () {                 // ① 캐릭터 생성 화면 컴
             <input
                 id="character-age"
                 type="text"
-                placeholder="25살, 500살, 나이 불명"
                 value={age}
                 onChange={(e) => setAge(e.target.value)}
                 maxLength={20}
+                placeholder="25살, 500살, 나이 불명"
             />
         </div>
 
         {/* 캐릭터 소개 */}
         <div className="form-group">
-            <label htmlFor="character-introduction">캐릭터 소개</label>
+            <label htmlFor="character-introduction">
+                캐릭터 소개 <span className="required">*</span>
+                </label>
             <textarea
                 id="character-introduction"
-                placeholder="캐릭터 소개를 입력해주세요."
+                className={errors.introduction ? 'error' : ''}
                 value={introduction}
-                onChange={(e) => setIntroduction(e.target.value)}
+                onChange={(e) => {
+                    setIntroduction(e.target.value);
+
+                    // 캐릭터 소개를 입력하면 오류 표시를 바로 없앰
+                    if (e.target.value.trim() !== '') {
+                        setErrors({
+                            ...errors,
+                            introduction: false,
+                        });
+                    }
+                }}
                 maxLength={2000}
+                placeholder="캐릭터 소개를 입력해주세요."
             />
             <p className="character-count">
                 {introduction.length} / 2000
@@ -145,10 +247,10 @@ function CreateCharacter () {                 // ① 캐릭터 생성 화면 컴
             <label htmlFor="character-secret">캐릭터 비밀</label>
             <textarea
                 id="character-secret"
-                placeholder="캐릭터의 비밀을 입력해주세요."
                 value={secret}
                 onChange={(e) => setSecret(e.target.value)}
                 maxLength={2000}
+                placeholder="캐릭터의 비밀을 입력해주세요."
             />
             <p className="character-count">
                 {secret.length} / 2000
@@ -159,8 +261,8 @@ function CreateCharacter () {                 // ① 캐릭터 생성 화면 컴
     )}
 
                 
-                {/* ⑪ 스토리 탭 */}
-                {tab === 'story' && (
+            {/* ⑪ 스토리 탭 */}
+            {tab === 'story' && (
             <div className="story-form">
                 <h3>스토리 설정</h3>
 
@@ -171,26 +273,53 @@ function CreateCharacter () {                 // ① 캐릭터 생성 화면 컴
         </div>
 
         <div className="form-group">
-            <label htmlFor="story-title">제목</label>
+            <label htmlFor="story-title">
+                제목 <span className="required">*</span>
+                </label>
             <input
                 id="story-title"
                 type="text"
-                placeholder="스토리 제목을 입력해주세요."
+                className={errors.title ? 'error' : ''}
                 value={title}
-                onChange={(e) => setTitle(e.target.value)}
+                onChange={(e) => {
+                    setTitle(e.target.value);
+
+                    // 스토리 제목을 입력하면 오류 표시를 바로 없앰
+                    if (e.target.value.trim() !== '') {
+                        setErrors({
+                            ...errors,
+                            title: false,
+                        });
+                    }
+                }}
+
                 maxLength={30}
+                placeholder="스토리 제목을 입력해주세요."
             />
             <p className="character-count">{title.length} / 30</p>
         </div>
 
         <div className="form-group">
-            <label htmlFor="world-introduction">세계관 소개</label>
+            <label htmlFor="world-introduction">
+                세계관 소개 <span className="required">*</span>
+                </label>
             <textarea
                 id="world-introduction"
-                placeholder="세계관을 소개해주세요."
+                className={errors.worldIntroduction ? 'error' : ''}
                 value={worldIntroduction}
-                onChange={(e) => setWorldIntroduction(e.target.value)}
+                onChange={(e) => {
+                    setWorldIntroduction(e.target.value);
+
+                    // 세계관 소개를 입력하면 오류 표시를 바로 없앰
+                    if (e.target.value.trim() !== '') {
+                        setErrors({
+                            ...errors,
+                            worldIntroduction: false,
+                        });
+                    }
+                }}
                 maxLength={2000}
+                placeholder="세계관을 소개해주세요."
             />
             <p className="character-count">
                 {worldIntroduction.length} / 2000
@@ -198,13 +327,26 @@ function CreateCharacter () {                 // ① 캐릭터 생성 화면 컴
         </div>
 
         <div className="form-group">
-            <label htmlFor="first-greeting">첫 멘트</label>
+            <label htmlFor="first-greeting">
+                첫 멘트 <span className="required">*</span>
+                </label>
             <textarea
                 id="first-greeting"
-                placeholder="캐릭터가 처음 건네는 말을 입력해주세요."
+                className={errors.firstGreeting ? 'error' : ''}
                 value={firstGreeting}
-                onChange={(e) => setFirstGreeting(e.target.value)}
+                onChange={(e) => {
+                    setFirstGreeting(e.target.value);
+
+                    // 첫 멘트를 입력하면 오류 표시를 바로 없앰
+                    if (e.target.value.trim() !== '') {
+                        setErrors({
+                            ...errors,
+                            firstGreeting: false,
+                        });
+                    }
+                }}
                 maxLength={2000}
+                placeholder="처음 상황을 입력해주세요."
             />
             <p className="character-count">
                 {firstGreeting.length} / 2000

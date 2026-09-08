@@ -187,3 +187,33 @@
     font-size: 13px;
 }
 
+/* 필수 입력 표시 */
+.required {
+    color: #ff5c5c;
+}
+
+/* 필수 입력칸에 오류가 있을 때(입력하지 않았을 때) 테두리를 빨간색으로 표시 */
+.form-group input.error {
+    border-color: #ff5c5c;
+}
+
+/* 필수 긴 글 입력칸에 오류가 있을 때(입력하지 않았을 때) 테두리를 빨간색으로 표시 */
+.form-group textarea.error {
+    border-color: #ff5c5c;
+}
+
+/* 성별을 선택하지 않았을 때 성별 버튼들의 테두리를 빨간색으로 표시 */
+.gender-buttons.error button {
+    border-color: #ff5c5c;
+}
+
+/* 선택한 캐릭터 이미지를 화면에 미리보기로 표시 */
+.character-image-preview {
+    display: block;
+    width: 120px;
+    height: 150px;
+    margin-top: 10px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
