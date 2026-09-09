@@ -21,13 +21,19 @@ function CreateCharacter () {                 // ① 캐릭터 생성 화면 컴
     const [firstGreeting, setFirstGreeting] = useState('');
 
                                                                 
-    const [characterImage, setCharacterImage] = useState(null); // 선택한 캐릭터 이미지를 저장
+    const [characterImages, setCharacterImages] = useState([]); // 선택한 캐릭터 이미지를 저장
+    const MAX_CHARACTER_IMAGES = 5;            // 캐릭터 이미지는 최대 5장까지 추가 가능
+
+    const [coverImages, setCoverImages] = useState([]); // 선택한 여러 장의 커버 이미지를 배열에 저장
+    const MAX_COVER_IMAGES = 3;                 // 커버 이미지는 최대 3장까지 추가 가능
     const [errors, setErrors] = useState({});
 
 
     function handleCreate () {
 
         const newErrors = {
+            characterImages: characterImages.length === 0,
+            coverImages: coverImages.length === 0,
             name: name.trim() === '',
             gender: gender === '',
             introduction: introduction.trim() === '',
@@ -39,6 +45,8 @@ function CreateCharacter () {                 // ① 캐릭터 생성 화면 컴
         setErrors(newErrors);
 
         if (
+            newErrors.characterImages ||
+            newErrors.coverImages ||
             newErrors.name || 
             newErrors.gender || 
             newErrors.introduction || 
@@ -100,21 +108,71 @@ function CreateCharacter () {                 // ① 캐릭터 생성 화면 컴
 
             {/* ⑮ 캐릭터 이미지 */}
         <div className="form-group">
-            <label>캐릭터 이미지</label>
+            <label>
+                캐릭터 이미지 <span className="required">*</span>
+            </label>
+
             {/* 이미지 파일을 선택하는 입력칸 */}
             <input
                 type="file"
+                id="character-image-input"
+                className="image-file-input"
                 accept="image/*"
-                onChange={(e) => setCharacterImage(e.target.files[0])}
+                onChange={(e) => {
+                    const newImage = e.target.files[0];
+
+                    if (newImage && characterImages.length < MAX_CHARACTER_IMAGES) {
+                        setCharacterImages([...characterImages, newImage]);
+
+                        // 이미지가 추가되면 이미지 필수 입력 오류를 없앰
+                        if (errors.characterImages) {
+                            setErrors({ ...errors, characterImages: false });
+                        }
+                    }
+                }}
             />
-            {/* 선택한 캐릭터 이미지가 있으면 미리보기로 표시 */}
-            {characterImage && (
-                    <img
-                        src={URL.createObjectURL(characterImage)}
-                        alt="캐릭터 이미지 미리보기"
-                        className="character-image-preview"
-                    />
-                )}
+
+            {/* 캐릭터 이미지들을 가로로 배치하는 영역 */}
+            <div className="character-images">
+
+            {/* 이미지가 최대 개수보다 적을 때만 + 버튼을 표시 */}
+            {characterImages.length < MAX_CHARACTER_IMAGES && (
+                <label
+                    htmlFor="character-image-input"
+                    className={errors.characterImages ? 'image-upload error' : 'image-upload'}
+                >
+                    +
+                </label>
+            )}
+            
+
+            {/* 선택한 캐릭터 이미지들을 하나씩 미리보기로 표시 */}
+            {characterImages.map((image, index) => (
+                <div className="image-preview-box" key={index}>
+
+                <img
+                    key={index}
+                    src={URL.createObjectURL(image)}
+                    alt="캐릭터 이미지 미리보기"
+                    className="character-image-preview"
+                />
+
+                {/* 이 이미지를 삭제하는 버튼 */}
+                <button
+                    type="button"
+                    className="image-delete-button"
+                    onClick={() => {
+                        const newImages = characterImages.filter((_, i) => i !== index);
+                        setCharacterImages(newImages);
+                    }}
+                >
+                    ×
+                </button>
+
+                </div>
+            ))}
+
+        </div>
             <p>캐릭터를 대표할 이미지를 추가해주세요.</p>
         </div>
 
@@ -260,17 +318,80 @@ function CreateCharacter () {                 // ① 캐릭터 생성 화면 컴
     </div>
     )}
 
-                
             {/* ⑪ 스토리 탭 */}
             {tab === 'story' && (
             <div className="story-form">
                 <h3>스토리 설정</h3>
 
         <div className="form-group">
-            <label>커버 이미지</label>
-            <button className="image-upload">+</button>
-            <p>스토리를 대표할 이미지를 추가해주세요.</p>
+
+    <label>
+        커버 이미지 <span className="required">*</span>
+    </label>
+
+    {/* 실제 커버 이미지 파일을 선택하는 입력칸 */}
+    <input
+        type="file"
+        id="cover-image-input"
+        className="image-file-input"
+        accept="image/*"
+        onChange={(e) => {
+            const newImage = e.target.files[0];
+
+            if (newImage && coverImages.length < MAX_COVER_IMAGES) {
+                setCoverImages([...coverImages, newImage]);
+
+                // 커버 이미지가 추가되면 필수 입력 오류를 없앰
+                if (errors.coverImages) {
+                    setErrors({ ...errors, coverImages: false });
+                }
+            }
+        }}
+    />
+
+        
+    {/* 커버 이미지와 + 버튼을 가로로 나란히 배치 */}
+    <div className="character-images">
+
+    {/* 커버 이미지가 최대 개수보다 적을 때만 + 버튼을 표시 */}
+    {coverImages.length < MAX_COVER_IMAGES && (
+        <label
+            htmlFor="cover-image-input"
+            className={errors.coverImages ? 'image-upload error' : 'image-upload'}
+        >
+            +
+        </label>
+    )}
+
+    {/* 선택한 커버 이미지들을 하나씩 미리보기로 표시 */}
+    {coverImages.map((image, index) => (
+        <div className="image-preview-box" key={index}>
+
+            <img
+                src={URL.createObjectURL(image)}
+                alt="커버 이미지 미리보기"
+                className="character-image-preview"
+            />
+
+            {/* 이 커버 이미지를 삭제하는 버튼 */}
+            <button
+                type="button"
+                className="image-delete-button"
+                onClick={() => {
+                    const newImages = coverImages.filter((_, i) => i !== index);
+                    setCoverImages(newImages);
+                }}
+            >
+                ×
+            </button>
+
         </div>
+    ))}
+
+</div>
+    <p>스토리를 대표할 이미지를 추가해주세요.</p>
+
+</div>
 
         <div className="form-group">
             <label htmlFor="story-title">

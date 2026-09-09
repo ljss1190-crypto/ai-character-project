@@ -104,10 +104,15 @@
 }
 
 /* 캐릭터 이미지 추가 영역 */
-.image-upload {
+.form-group label.image-upload {
     width: 120px;
     height: 150px;
-    display: block;
+
+    /* + 표시를 박스의 정가운데에 배치 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     background-color: #1c1c1c;
     color: #aaaaaa;
     border: 1px dashed #555555;
@@ -215,5 +220,45 @@
     margin-top: 10px;
     object-fit: cover;
     border-radius: 10px;
+}
+
+/* 실제 파일 선택 입력칸은 화면에서 보이지 않게 숨김 */
+.image-file-input {
+    display: none;
+}
+
+/* 캐릭터 이미지와 + 버튼을 가로로 나란히 배치 */
+.character-images {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+/* 이미지와 삭제 버튼을 한 영역으로 묶음 */
+.image-preview-box {
+    position: relative;
+}
+
+/* 선택한 이미지를 삭제하는 X 버튼 */
+.image-delete-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+
+    width: 28px;
+    height: 28px;
+    border: none;
+    border-radius: 50%;
+
+    background-color: #111111;
+    color: white;
+
+    font-size: 18px;
+    cursor: pointer;
+}
+
+/* 캐릭터와 커버 이미지가 선택되지 않았을 때 + 박스를 빨간색으로 표시 */
+.form-group label.image-upload.error {
+    border-color: #ff4d4f;
 }
 
