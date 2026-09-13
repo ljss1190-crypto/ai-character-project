@@ -262,3 +262,98 @@
     border-color: #ff4d4f;
 }
 
+.character-block-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.character-block-header h3 {
+    margin: 0;
+}
+
+.character-delete-button {
+    background: none;
+    color: #ff6b6b;
+    border: 1px solid #555;
+    border-radius: 8px;
+    padding: 8px 14px;
+    cursor: pointer;
+}
+
+.character-delete-button:hover {
+    border-color: #ff6b6b;
+    color: white;
+}
+
+.character-add-button {
+    display: block;
+    margin: 30px auto 0;
+    padding: 12px 24px;
+    background-color: #1c1c1c;
+    color: #c084fc;
+    border: 1px solid #c084fc;
+    border-radius: 10px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.character-add-button:hover {
+    background-color: #c084fc;
+    color: white;
+}
+
+.toast-message {
+    position: fixed;
+    left: 50%;
+    bottom: 30px;
+    transform: translateX(-50%);
+
+    padding: 12px 20px;
+    background-color: #1c1c1c;
+    color: white;
+
+    border: 1px solid #c084fc;
+    border-radius: 10px;
+
+    font-size: 14px;
+    z-index: 1000;
+}
+
+/* ===== 첫 멘트 토큰 버튼 ===== */
+
+/* + 유저, + 캐릭터1, + 캐릭터2 ... 버튼 전체 영역 */
+/* ===== 토큰 버튼 전체 영역 ===== */
+/* 버튼을 왼쪽부터 차례대로 배치하고,
+   공간이 부족하면 자연스럽게 다음 줄로 내려감 */
+.token-buttons {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 8px;
+    margin-top: 10px;
+}
+
+/* 각각의 토큰 버튼 */
+.token-buttons button {
+    padding: 7px 12px;
+
+    background-color: #1c1c1c;
+    color: #aaaaaa;
+
+    border: 1px solid #3a3a3a;
+    border-radius: 18px;
+
+    font-size: 13px;
+    cursor: pointer;
+}
+
+/* 마우스를 올렸을 때 */
+.token-buttons button:hover {
+    color: white;
+    border-color: #c084fc;
+}
+
