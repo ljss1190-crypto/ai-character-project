@@ -22,6 +22,7 @@ function CreateCharacter () {                 // ① 캐릭터 생성 화면 컴
     const introductionRef = useRef(null); // 캐릭터1 소개 textarea
     const secretRef = useRef(null); // 캐릭터1 비밀 textarea
     const addedIntroductionRefs = useRef([]); // 캐릭터2~10 소개 textarea들을 각각 저장하는 ref 배열
+    const addedSecretRefs = useRef([]); // 캐릭터2~10 비밀 textarea들을 각각 저장하는 ref 배열
     const worldIntroductionRef = useRef(null); // 세계관 소개 textarea의 커서 위치를 사용하기 위한 ref
     const firstGreetingRef = useRef(null);  // 첫 멘트 textarea의 현재 커서 위치를 사용하기 위해 연결
 
@@ -299,6 +300,71 @@ function insertSecretToken(token) {
         textarea.focus();
 
         const newCursorPosition = start + token.length;
+
+        textarea.setSelectionRange(
+            newCursorPosition,
+            newCursorPosition
+        );
+    });
+}
+
+            // ==========================================
+// 캐릭터2~10 비밀 textarea에 토큰 삽입
+//
+// index 0 = 캐릭터2
+// index 1 = 캐릭터3
+// index 2 = 캐릭터4
+// ...
+// ==========================================
+function insertAddedSecretToken(index, token) {
+
+    // 현재 캐릭터의 비밀 textarea 가져오기
+    const textarea = addedSecretRefs.current[index];
+
+    // textarea를 찾지 못하면 실행하지 않음
+    if (!textarea) {
+        return;
+    }
+
+    // 현재 커서 또는 드래그 선택 영역의 시작/끝 위치
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+
+    // characters 배열 복사
+    const newCharacters = [...characters];
+
+    // 반복문의 index 0은 캐릭터2이므로
+    // 실제 characters 배열에서는 index + 1 위치
+    const actualIndex = index + 1;
+
+    // 현재 캐릭터의 기존 비밀 내용
+    const currentText =
+        newCharacters[actualIndex].secret;
+
+    // 현재 커서 위치에 토큰 삽입
+    const newText =
+        currentText.slice(0, start) +
+        token +
+        currentText.slice(end);
+
+    // 캐릭터 비밀은 최대 2000자
+    if (newText.length > 2000) {
+        return;
+    }
+
+    // 현재 캐릭터의 비밀 내용만 변경
+    newCharacters[actualIndex].secret = newText;
+
+    // 변경된 characters 배열 저장
+    setCharacters(newCharacters);
+
+    // React가 변경된 내용을 화면에 반영한 뒤
+    // 같은 textarea에 다시 커서를 놓음
+    requestAnimationFrame(() => {
+        textarea.focus();
+
+        const newCursorPosition =
+            start + token.length;
 
         textarea.setSelectionRange(
             newCursorPosition,
@@ -1384,6 +1450,10 @@ console.log(storyData);
             <label>캐릭터 비밀</label>
 
             <textarea
+                ref={(element) => {
+                addedSecretRefs.current[index] = element;
+                }}
+
                 value={character.secret}
                 maxLength={2000}
                 onChange={(e) => {
@@ -1393,6 +1463,49 @@ console.log(storyData);
                 }}
                 placeholder="캐릭터의 비밀을 입력해주세요."
         />
+
+             {/* 캐릭터2~10 비밀 토큰 버튼 */}
+<div className="token-buttons">
+
+    {/* 유저 토큰 */}
+    <button
+        type="button"
+        onClick={() =>
+            insertAddedSecretToken(
+                index,
+                '{{user}}'
+            )
+        }
+    >
+        + 유저
+    </button>
+
+    {/* 현재 만들어진 캐릭터 수만큼 캐릭터 토큰 버튼 생성 */}
+    {characters.map((_, tokenIndex) => (
+        <button
+            key={tokenIndex}
+            type="button"
+            onClick={() =>
+                insertAddedSecretToken(
+                    index,
+                    `{{char${tokenIndex + 1}}}`
+                )
+            }
+        >
+            + 캐릭터{tokenIndex + 1}
+
+            {tokenIndex === 0
+                ? (name.trim() !== ''
+                    ? ` (${name})`
+                    : '')
+                : (characters[tokenIndex].name.trim() !== ''
+                    ? ` (${characters[tokenIndex].name})`
+                    : '')
+            }
+        </button>
+    ))}
+
+</div>   
 
         <p className="character-count">
             {character.secret.length} / 2000
