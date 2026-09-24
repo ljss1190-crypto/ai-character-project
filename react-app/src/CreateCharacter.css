@@ -357,3 +357,64 @@
     border-color: #c084fc;
 }
 
+/* ===== 캐릭터 접기 / 펼치기 헤더 ===== */
+
+/*
+    캐릭터1 ~ 캐릭터10의 접기/펼치기 버튼
+
+    ▶ 캐릭터1
+    ▼ 캐릭터2 (토토)
+
+    형태로 표시됨
+*/
+.character-toggle-header {
+    flex: 1;
+    text-align: left;
+
+    padding: 14px 16px;
+
+    background-color: #1c1c1c;
+    color: white;
+
+    border: 1px solid #333333;
+    border-radius: 10px;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+/* 캐릭터 헤더에 마우스를 올렸을 때 */
+.character-toggle-header:hover {
+    border-color: #c084fc;
+}
+
+
+/* ===== 캐릭터2 ~ 10 헤더 ===== */
+
+/*
+    왼쪽  : 캐릭터 접기/펼치기 버튼
+    오른쪽: 삭제 버튼
+*/
+.character-block-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    margin-bottom: 20px;
+}
+
+
+/* 삭제 버튼이 찌그러지지 않도록 크기 유지 */
+.character-block-header .character-delete-button {
+    flex-shrink: 0;
+}
+
+/* 캐릭터1 헤더는 character-block-header 밖에 있으므로
+   직접 가로 너비를 100%로 지정 */
+.persona-form > .character-toggle-header {
+    width: 100%;
+    margin-bottom: 20px;
+}
+

@@ -25,7 +25,7 @@ function CreateCharacter () {                 // ① 캐릭터 생성 화면 컴
     const addedSecretRefs = useRef([]); // 캐릭터2~10 비밀 textarea들을 각각 저장하는 ref 배열
     const worldIntroductionRef = useRef(null); // 세계관 소개 textarea의 커서 위치를 사용하기 위한 ref
     const firstGreetingRef = useRef(null);  // 첫 멘트 textarea의 현재 커서 위치를 사용하기 위해 연결
-
+    
                                                                 
     const [characterImages, setCharacterImages] = useState([]); // 선택한 캐릭터 이미지를 저장
     const MAX_CHARACTER_IMAGES = 5;            // 캐릭터 이미지는 최대 5장까지 추가 가능
@@ -49,40 +49,171 @@ function CreateCharacter () {                 // ① 캐릭터 생성 화면 컴
         }
     ]);
 
+    // ==========================================
+    // 현재 펼쳐져 있는 캐릭터 번호
+    //
+    // 0 = 캐릭터1
+    // 1 = 캐릭터2
+    // 2 = 캐릭터3
+    // ...
+    //
+    // 처음 페이지를 열면 캐릭터1이 펼쳐져 있음
+    // ==========================================
+    const [openCharacterIndex, setOpenCharacterIndex] = useState(0);
+
+
     const [errors, setErrors] = useState({});
- 
+
     
     const [toastMessage, setToastMessage] = useState(''); // 삭제 완료 알림 문구
 
+
     // ==========================================
-// {{user}}, {{char1}}, {{char2}} 같은 문구 치환
+// 단어의 마지막 한글에 받침이 있는지 확인
+//
+// 예:
+// 토토 → 마지막 글자 '토' → 받침 없음 → false
+// 루시엘 → 마지막 글자 '엘' → 받침 있음 → true
+// ==========================================
+function hasFinalConsonant(word) {
+
+    // 단어가 비어 있으면 false
+    if (!word) {
+        return false;
+    }
+
+    // 단어의 마지막 글자를 가져옴
+    const lastCharacter = word[word.length - 1];
+
+    // 마지막 글자를 유니코드 숫자로 변환
+    const code = lastCharacter.charCodeAt(0);
+
+    // 마지막 글자가 한글 '가' ~ '힣' 범위가 아니면 false
+    if (code < 0xAC00 || code > 0xD7A3) {
+        return false;
+    }
+
+    // 한글 한 글자는 받침 여부를 28가지 값으로 구분할 수 있음
+    // 나머지가 0 → 받침 없음
+    // 나머지가 0이 아님 → 받침 있음
+    return (code - 0xAC00) % 28 !== 0;
+}
+
+// ==========================================
+// 단어의 받침 여부에 따라 알맞은 조사 선택
+//
+// 예:
+// getKoreanParticle('토토', '이/가') → '가'
+// getKoreanParticle('루시엘', '이/가') → '이'
+//
+// getKoreanParticle('토토', '은/는') → '는'
+// getKoreanParticle('루시엘', '은/는') → '은'
+// ==========================================
+function getKoreanParticle(word, particle) {
+
+    // 위에서 만든 함수로 받침 여부 확인
+    const hasFinal = hasFinalConsonant(word);
+
+    // 이/가
+    if (particle === '이/가') {
+        return hasFinal ? '이' : '가';
+    }
+
+    // 은/는
+    if (particle === '은/는') {
+        return hasFinal ? '은' : '는';
+    }
+
+    // 을/를
+    if (particle === '을/를') {
+        return hasFinal ? '을' : '를';
+    }
+
+    // 지원하지 않는 조사라면
+    // 입력받은 내용을 그대로 반환
+    return particle;
+}
+
+
+// ==========================================
+// {{user}}, {{char1}}, {{char2}} 등의 토큰을
+// 실제 이름으로 변환하고 한국어 조사도 자동 처리
+//
+// 예:
+// {{char1}}{{이/가}}
+// 토토 → 토토가
+// 루시엘 → 루시엘이
 // ==========================================
 function replaceTemplateText(text, allCharacters) {
-    // text가 비어 있으면 빈 문자열 반환
+
     if (!text) {
         return '';
     }
 
-    // 원본 문장을 result에 저장
     let result = text;
 
-    // {{user}}를 임시 사용자 이름으로 변경
-    // 나중에 실제 로그인 닉네임과 연결하면 됨
-    result = result.replaceAll('{{user}}', '사용자');
+    // ==========================================
+    // 1. 유저 토큰 + 조사 처리
+    //
+    // 예:
+    // {{user}}{{이/가}} → 사용자가
+    // {{user}}{{은/는}} → 사용자는
+    // {{user}}{{을/를}} → 사용자를
+    // ==========================================
+    const userName = '사용자';
 
-    // 캐릭터 이름 치환
-    // 캐릭터 1 = {{char1}}
-    // 캐릭터 2 = {{char2}}
-    // ...
-    allCharacters.forEach((character, index) => {
+    ['이/가', '은/는', '을/를'].forEach((particle) => {
         result = result.replaceAll(
-            `{{char${index + 1}}}`,
-            character.name || `캐릭터${index + 1}`
+            `{{user}}{{${particle}}}`,
+            userName + getKoreanParticle(userName, particle)
+        );
+    });
+
+    // 조사가 붙지 않은 일반 {{user}} 처리
+    result = result.replaceAll(
+        '{{user}}',
+        userName
+    );
+
+    // ==========================================
+    // 2. 캐릭터 토큰 + 조사 처리
+    // ==========================================
+    allCharacters.forEach((character, index) => {
+
+        // 캐릭터 이름
+        // 이름이 비어 있으면 캐릭터1, 캐릭터2... 사용
+        const characterName =
+            character.name || `캐릭터${index + 1}`;
+
+        // 현재 캐릭터 토큰
+        // 예: {{char1}}
+        const characterToken =
+            `{{char${index + 1}}}`;
+
+        // 조사 3종 자동 처리
+        ['이/가', '은/는', '을/를'].forEach((particle) => {
+
+            result = result.replaceAll(
+                `${characterToken}{{${particle}}}`,
+                characterName +
+                    getKoreanParticle(
+                        characterName,
+                        particle
+                    )
+            );
+        });
+
+        // 조사가 붙지 않은 일반 캐릭터 토큰 처리
+        result = result.replaceAll(
+            characterToken,
+            characterName
         );
     });
 
     return result;
 }
+
+
 
     // ==========================================
 // 첫 멘트 textarea의 현재 커서 위치에 토큰 삽입
@@ -618,16 +749,7 @@ console.log(storyData);
 
     return (                                  // ② 화면에 보여줄 내용을 return
         <div 
-        className="create-page"
-        onPointerDownCapture={(e) => {
-            console.log(
-                '클릭된 요소:',
-                e.target.tagName,
-                e.target.className,
-                e.target.textContent
-            );
-        }}
-        >
+        className="create-page">
 
              {/* ③ 캐릭터 생성 페이지 상단 제목 */}
             <div className="create-header">
@@ -678,6 +800,28 @@ console.log(storyData);
             {tab === 'persona' && (
                 <div className="persona-form">
                     <h3>기본 설정</h3>
+
+        {/* ==========================================
+        캐릭터1 접기/펼치기 헤더
+        - 현재는 헤더만 먼저 추가
+        - 실제 입력 영역 접기/펼치기는 다음 단계에서 연결
+        ========================================== */}
+    <button
+        type="button"
+        className="character-toggle-header"
+        onClick={() =>
+            setOpenCharacterIndex(
+                openCharacterIndex === 0 ? null : 0
+            )
+        }
+    >
+        {openCharacterIndex === 0 ? '▼' : '▶'} 캐릭터1
+        {name.trim() !== '' ? ` (${name})` : ''}
+    </button>  
+
+        {/* 캐릭터1이 선택되어 있을 때만 입력 영역을 보여줌 */}
+        {openCharacterIndex === 0 && (
+        <>
 
             {/* ⑮ 캐릭터 이미지 */}
         <div className="form-group">
@@ -983,11 +1127,27 @@ console.log(storyData);
             </p>
         </div>
 
+        </>
+    )}
+
             {characters.slice(1).map((character, index) => (
                 <div key={index}>
 
                     <div className="character-block-header">
-                        <h3>캐릭터 {index + 2}</h3>
+                        <button
+                            type="button"
+                            className="character-toggle-header"
+                            onClick={() =>
+                                setOpenCharacterIndex(
+                                    openCharacterIndex === index + 1
+                                        ? null
+                                        : index + 1
+                                )
+                            }
+                        >
+                            {openCharacterIndex === index + 1 ? '▼' : '▶'} 캐릭터{index + 2}
+                            {character.name.trim() !== '' ? ` (${character.name})` : ''}
+                        </button>
 
                         <button
                             type="button"
@@ -1040,6 +1200,10 @@ console.log(storyData);
             {/* ================================ */}
 {/* 캐릭터 2~10 반복 영역 - 이미지 */}
 {/* ================================ */}
+
+{/* 현재 선택된 캐릭터의 입력 영역만 펼쳐서 보여줌 */}
+{openCharacterIndex === index + 1 && (
+    <>
 
 <div className="form-group">
     <label>
@@ -1512,6 +1676,9 @@ console.log(storyData);
         </p>
     </div> 
         
+        </>
+    )}
+
     </div>
     ))}
     {/* 위에 div는 반복되는 캐릭터 입력 영역의 div 끝(한 명 전체 끝) */}
@@ -1536,6 +1703,10 @@ console.log(storyData);
                                 images: [],
                             }
                         ]);
+                        
+                        // 새로 추가한 캐릭터를 자동으로 펼치기
+                        // characters.length가 새 캐릭터의 번호(index)가 됨
+                        setOpenCharacterIndex(characters.length);
                     }}
                 >
                     + 캐릭터 추가 {characterCount} / {MAX_CHARACTERS}
