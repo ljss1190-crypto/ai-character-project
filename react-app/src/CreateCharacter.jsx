@@ -1172,6 +1172,23 @@ console.log(storyData);
     // 현재 캐릭터 수 1 감소
     setCharacterCount(characterCount - 1);
 
+    // ==========================================
+    // 캐릭터 삭제 후 펼쳐진 캐릭터 위치 조정
+    // ==========================================
+
+    // 현재 펼쳐진 캐릭터를 삭제한 경우
+    // 캐릭터1을 펼침
+    if (openCharacterIndex === actualIndex) {
+        setOpenCharacterIndex(0);
+    }
+
+    // 현재 펼쳐진 캐릭터보다 앞쪽 캐릭터를 삭제한 경우
+    // 배열 번호가 하나씩 앞으로 당겨지므로
+    // 펼쳐진 위치도 1 감소시킴
+    else if (openCharacterIndex > actualIndex) {
+        setOpenCharacterIndex(openCharacterIndex - 1);
+    }
+
     // 이미 오류 정보가 만들어져 있다면
     // 삭제한 캐릭터의 오류 정보도 같이 삭제
     if (errors.characters) {
