@@ -17,6 +17,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 import './index.css';
 import App from './App.jsx';
+import ScrollToTop from './ScrollToTop.jsx';
 
 
 createRoot(document.getElementById('root')).render(
@@ -25,6 +26,9 @@ createRoot(document.getElementById('root')).render(
 
     {/* App 전체에서 React Router를 사용할 수 있도록 감싸줌 */}
     <BrowserRouter>
+
+      {/* 다른 페이지로 이동할 때 자동으로 맨 위로 이동 */}
+      <ScrollToTop />
 
       <App />
 

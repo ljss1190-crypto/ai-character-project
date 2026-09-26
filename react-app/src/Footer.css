@@ -1,0 +1,170 @@
+
+
+/* ==========================================
+    사이트 공통 Footer
+
+    별도의 박스처럼 보이지 않도록
+    본문과 같은 계열의 배경을 사용하고
+    위쪽 경계선으로만 영역을 구분함
+========================================== */
+.site-footer {
+    width: 100%;
+
+    margin-top: 100px;
+
+    background-color: #111111;
+
+    border-top: 1px solid #2a2a2a;
+}
+
+
+/* Footer 내용 전체 너비 */
+.footer-inner {
+    width: 100%;
+    max-width: 760px;
+
+    margin: 0 auto;
+    padding: 45px 30px 35px;
+}
+
+
+/* ==========================================
+    서비스 이름
+========================================== */
+
+.footer-brand {
+    margin-bottom: 18px;
+
+    color: #ffffff;
+
+    font-size: 20px;
+    font-weight: 700;
+}
+
+
+/* ==========================================
+    이용약관 등의 링크
+========================================== */
+
+.footer-links {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 12px 24px;
+}
+
+.footer-links a {
+    color: #b5b5b5;
+
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.footer-links a:hover {
+    color: #c084fc;
+}
+
+
+/* 구분선 */
+.footer-divider {
+    width: 100%;
+    height: 1px;
+
+    margin: 30px 0;
+
+    background-color: #242424;
+}
+
+
+/* ==========================================
+    사업자 정보
+========================================== */
+
+.footer-business {
+    display: grid;
+
+    /* 한 줄에 사업자 정보 2개씩 배치 */
+    grid-template-columns: repeat(2, 1fr);
+
+    column-gap: 60px;
+    row-gap: 14px;
+
+    width: 100%;
+}
+
+
+/* 사업자 정보 한 항목 */
+.footer-business > div {
+    display: grid;
+
+    /* 왼쪽 = 항목명 / 오른쪽 = 실제 내용 */
+    grid-template-columns: 135px 1fr;
+
+    gap: 14px;
+
+    align-items: start;
+
+    font-size: 13px;
+}
+
+
+/* 항목 이름 */
+.footer-business span {
+    min-width: 0;
+
+    color: #777777;
+
+    white-space: nowrap;
+}
+
+
+/* 실제 정보 */
+.footer-business p {
+    margin: 0;
+
+    color: #a0a0a0;
+
+    white-space: nowrap;
+}
+
+/* 개발 단계 안내 */
+.footer-business-notice {
+    margin: 22px 0 0;
+
+    color: #666666;
+
+    font-size: 12px;
+}
+
+
+/* ==========================================
+    저작권
+========================================== */
+
+.footer-copyright {
+    margin: 30px 0 0;
+
+    color: #555555;
+
+    font-size: 12px;
+}
+
+
+/* ==========================================
+    화면이 좁아졌을 때
+
+    사업자 정보를 2열 → 1열로 변경
+========================================== */
+
+@media (max-width: 700px) {
+
+    .footer-inner {
+        padding: 35px 24px 30px;
+    }
+
+    .footer-business {
+        grid-template-columns: 1fr;
+    }
+
+}
+

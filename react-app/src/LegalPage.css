@@ -1,0 +1,98 @@
+
+
+/* ==========================================
+    약관 / 개인정보처리방침 / AI 정책
+    공통 페이지 디자인
+
+    여러 정책 페이지에서 같은 디자인을
+    사용할 수 있도록 하나의 CSS로 관리함
+========================================== */
+
+.legal-page {
+    width: 100%;
+    max-width: 850px;
+
+    margin: 0 auto;
+    padding: 60px 40px 100px;
+}
+
+
+/* 페이지 맨 위 제목 영역 */
+.legal-header {
+    margin-bottom: 50px;
+}
+
+.legal-header h2 {
+    margin: 0 0 12px;
+
+    color: #ffffff;
+
+    font-size: 32px;
+}
+
+.legal-header p {
+    margin: 0;
+
+    color: #888888;
+
+    font-size: 14px;
+}
+
+
+/* ==========================================
+    약관 본문
+========================================== */
+
+.legal-content {
+    color: #c7c7c7;
+
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+
+/* 각 조항 */
+.legal-section {
+    margin-bottom: 42px;
+}
+
+.legal-section h3 {
+    margin: 0 0 14px;
+
+    color: #ffffff;
+
+    font-size: 19px;
+}
+
+.legal-section p {
+    margin: 0 0 10px;
+}
+
+
+/* 조항 안의 목록 */
+.legal-section ul {
+    margin: 12px 0 0;
+    padding-left: 22px;
+}
+
+.legal-section li {
+    margin-bottom: 8px;
+}
+
+
+/* ==========================================
+    모바일 화면
+========================================== */
+
+@media (max-width: 700px) {
+
+    .legal-page {
+        padding: 40px 24px 70px;
+    }
+
+    .legal-header h2 {
+        font-size: 27px;
+    }
+
+}
+

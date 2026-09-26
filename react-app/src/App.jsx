@@ -4,6 +4,12 @@ import './App.css';
 
 import Create from './Create';
 import CreateCharacter from './CreateCharacter';
+import Footer from './Footer';
+import Terms from './Terms';
+import Privacy from './Privacy';
+import AiCharacterPolicy from './AiCharacterPolicy';
+import YouthProtection from './YouthProtection';
+import Contact from './Contact';
 
 /*
   Routes = 현재 주소(URL)에 맞는 화면을 보여줌
@@ -160,10 +166,84 @@ function App() {
             }
           />
 
+          {/* ==========================================
+              이용약관 페이지
+
+              Footer의 '이용약관'을 누르면
+              /terms 주소로 이동하여 이 화면을 보여줌
+          ========================================== */}
+          <Route
+            path="/terms"
+            element={
+              <Terms />
+            }
+          />
+
+          {/* ==========================================
+              개인정보처리방침 페이지
+
+              Footer의 '개인정보처리방침'을 누르면
+              /privacy 주소로 이동함
+          ========================================== */}
+          <Route
+            path="/privacy"
+            element={
+              <Privacy />
+            }
+          />
+
+          {/* ==========================================
+              AI 캐릭터 정책 페이지
+
+              Footer의 'AI 캐릭터 정책'을 누르면
+              /ai-policy 주소로 이동함
+          ========================================== */}
+          <Route
+            path="/ai-policy"
+            element={
+              <AiCharacterPolicy />
+            }
+          />
+
+          {/* ==========================================
+              청소년보호정책 페이지
+
+              Footer의 '청소년보호정책'을 누르면
+              /youth-protection 주소로 이동함
+          ========================================== */}
+          <Route
+            path="/youth-protection"
+            element={
+              <YouthProtection />
+            }
+          />
+
+          {/* ==========================================
+              문의하기 페이지
+
+              Footer의 '문의하기'를 누르면
+              /contact 주소로 이동함
+          ========================================== */}
+          <Route
+            path="/contact"
+            element={
+              <Contact />
+            }
+          />
 
         </Routes>
 
-      </main>
+            </main>
+
+
+      {/* ==========================================
+          사이트 공통 Footer
+
+          홈 / 제작 / 캐릭터 만들기 등
+          모든 페이지 아래에 공통으로 표시됨
+      ========================================== */}
+      <Footer />
+
 
     </>
   );
