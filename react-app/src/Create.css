@@ -1,0 +1,152 @@
+
+
+/* ==========================================
+    제작 메인 페이지
+========================================== */
+
+.create-menu-page {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 55px 40px 100px;
+}
+
+
+/* ==========================================
+    제작 페이지 상단 제목
+========================================== */
+
+.create-menu-header {
+    margin-bottom: 55px;
+}
+
+.create-menu-header h2 {
+    margin: 0 0 12px;
+    font-size: 32px;
+    color: #ffffff;
+}
+
+.create-menu-header p {
+    margin: 0;
+    color: #999999;
+    font-size: 15px;
+}
+
+
+/* ==========================================
+    제작 페이지의 각 영역
+
+    새로 만들기
+    내가 만든 캐릭터
+========================================== */
+
+.create-menu-section {
+    margin-bottom: 55px;
+}
+
+.create-menu-section h3 {
+    margin: 0 0 20px;
+    font-size: 20px;
+    color: #ffffff;
+}
+
+
+/* ==========================================
+    캐릭터 만들기 카드
+========================================== */
+
+.create-menu-card {
+    width: 100%;
+    min-height: 180px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    padding: 30px;
+
+    background-color: #171717;
+    color: #ffffff;
+
+    border: 1px solid #333333;
+    border-radius: 14px;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+/* 카드에 마우스를 올렸을 때 */
+.create-menu-card:hover {
+    background-color: #1c1c1c;
+    border-color: #a855f7;
+    transform: translateY(-2px);
+}
+
+
+/* + 표시 */
+.create-menu-plus {
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 4px;
+
+    border-radius: 50%;
+
+    background-color: #a855f7;
+    color: #ffffff;
+
+    font-size: 30px;
+    font-weight: 300;
+    line-height: 1;
+}
+
+
+/* 캐릭터 만들기 글자 */
+.create-menu-card strong {
+    font-size: 18px;
+}
+
+
+/* 카드 안 설명 */
+.create-menu-description {
+    color: #999999;
+    font-size: 14px;
+    line-height: 1.6;
+    text-align: center;
+}
+
+
+/* ==========================================
+    내가 만든 캐릭터 - 비어 있는 상태
+
+    나중에 Supabase를 연결하면
+    이 영역 대신 실제 캐릭터 카드가 표시될 예정
+========================================== */
+
+.my-character-empty {
+    width: 100%;
+
+    padding: 45px 20px;
+
+    background-color: #151515;
+
+    border: 1px solid #2d2d2d;
+    border-radius: 12px;
+
+    color: #777777;
+    font-size: 14px;
+    text-align: center;
+}
+
