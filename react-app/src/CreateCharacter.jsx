@@ -19,6 +19,61 @@ function CreateCharacter () {                 // ① 캐릭터 생성 화면 컴
     const [title, setTitle] = useState('');
     const [worldIntroduction, setWorldIntroduction] = useState('');
     const [firstGreeting, setFirstGreeting] = useState('');
+
+    // ==========================================
+    // 설정 탭에서 사용하는 값
+    // ==========================================
+
+    // 캐릭터 공개 여부
+    // public = 공개 / private = 비공개
+    const [visibility, setVisibility] = useState('public');
+
+    // 이용 등급
+    // all = 전체 이용가 / adult = 성인 이용가
+    const [contentRating, setContentRating] = useState('all');
+
+    // 작품을 보는 사용자에게 보여줄 작가의 코멘트
+    const [authorComment, setAuthorComment] = useState(''); 
+
+    // ==========================================
+    // 스타일 탭에서 사용하는 값
+    // ==========================================
+
+    // 난이도
+    // easy = 쉬운 / normal = 보통
+    // hard = 어려운 / extreme = 극한
+    const [difficulty, setDifficulty] = useState('normal');
+
+    // 전개 속도
+    // fast = 빠른 / natural = 자연스러운 / slow = 느린
+    const [storySpeed, setStorySpeed] = useState('natural');
+
+    // 시점
+    // first = 1인칭 / second = 2인칭 / third = 3인칭
+    const [pointOfView, setPointOfView] = useState('third');
+
+    // 시제
+    // past = 과거 / present = 현재
+    const [tense, setTense] = useState('past');
+
+    // 응답 길이
+    // short = 짧은 / medium = 중간 / long = 긴 / auto = 자동
+    const [responseLength, setResponseLength] = useState('auto');
+
+    // 표현 방식
+    // dialogue = 대화 더하기
+    // balanced = 기본
+    // action = 행동 더하기
+    const [expressionStyle, setExpressionStyle] = useState('balanced');
+
+    // 분위기는 최대 2개를 선택할 수 있으므로 배열로 저장
+    const [moods, setMoods] = useState([]);
+
+    // 스토리텔링 스타일
+    // 아직 우리 서비스의 스타일 이름을 정하기 전이므로
+    // 기본값은 설정 안 함
+    const [storytellingStyle, setStorytellingStyle] = useState('none');
+
     const introductionRef = useRef(null); // 캐릭터1 소개 textarea
     const secretRef = useRef(null); // 캐릭터1 비밀 textarea
     const addedIntroductionRefs = useRef([]); // 캐릭터2~10 소개 textarea들을 각각 저장하는 ref 배열
@@ -722,6 +777,47 @@ const storyData = {
     // 스토리 정보
     title: title,
     
+    // ==========================================
+    // 설정 정보
+    // ==========================================
+
+    // 공개 / 비공개
+    visibility: visibility,
+
+    // 전체 이용가 / 성인 이용가
+    contentRating: contentRating,
+
+    // 작가의 코멘트
+    authorComment: authorComment,
+
+    // ==========================================
+    // 스타일 정보
+    // ==========================================
+
+    // 난이도
+    difficulty: difficulty,
+
+    // 전개 속도
+    storySpeed: storySpeed,
+
+    // 시점
+    pointOfView: pointOfView,
+
+    // 시제
+    tense: tense,
+
+    // 응답 길이
+    responseLength: responseLength,
+
+    // 표현 방식
+    expressionStyle: expressionStyle,
+
+    // 선택한 분위기 목록
+    moods: moods,
+
+    // 스토리텔링 스타일
+    storytellingStyle: storytellingStyle,
+
     // 세계관 안의 {{user}}, {{char1}}, {{char2}} 등도 치환
     worldIntroduction: replaceTemplateText(
         worldIntroduction,
@@ -1999,19 +2095,702 @@ console.log(storyData);
         )}      
 
 
-                {/* ⑬ 스타일 탭 */}
-                {tab === 'style' && (
-                    <div>
-                        <h3>스타일 설정</h3>
-                    </div>
-                )}
+            {/* ==========================================
+            ⑫ 스타일 탭
+            ========================================== */}
+            {tab === 'style' && (
+                <div className="style-form">
 
-                {/* ⑭ 설정 탭 */}
+                <h3>스타일 설정</h3>
+
+            {/* ==========================================
+            진행 방식
+            ========================================== */}
+        <div className="style-section">
+
+            <h4>진행 방식</h4>
+
+            {/* ==========================================
+                난이도
+
+                easy    = 쉬운
+                normal  = 보통
+                hard    = 어려운
+                extreme = 극한
+            ========================================== */}
+            <div className="form-group">
+
+                <label>난이도</label>
+
+                <div className="style-option-buttons">
+
+                    <button
+                        type="button"
+                        className={
+                            difficulty === 'easy'
+                                ? 'selected'
+                                : ''
+                        }
+                        onClick={() => {
+                            setDifficulty('easy');
+                        }}
+                    >
+                        쉬운
+                    </button>
+
+                    <button
+                        type="button"
+                        className={
+                            difficulty === 'normal'
+                                ? 'selected'
+                                : ''
+                        }
+                        onClick={() => {
+                            setDifficulty('normal');
+                        }}
+                    >
+                        보통
+                    </button>
+
+                    <button
+                        type="button"
+                        className={
+                            difficulty === 'hard'
+                                ? 'selected'
+                                : ''
+                        }
+                        onClick={() => {
+                            setDifficulty('hard');
+                        }}
+                    >
+                        어려운
+                    </button>
+
+                    <button
+                        type="button"
+                        className={
+                            difficulty === 'extreme'
+                                ? 'selected'
+                                : ''
+                        }
+                        onClick={() => {
+                            setDifficulty('extreme');
+                        }}
+                    >
+                        극한
+                    </button>
+
+                </div>
+
+                    <p>
+    캐릭터들이 각자의 성격과 상황에 맞춰 개연성 있게 행동해요.
+</p>
+
+</div>
+
+{/* ==========================================
+    전개 속도
+
+    fast    = 빠른
+    natural = 자연스러운
+    slow    = 느린
+========================================== */}
+<div className="form-group">
+
+    <label>전개 속도</label>
+
+    <div className="style-option-buttons">
+
+        {/* 빠른 */}
+        <button
+            type="button"
+            className={
+                storySpeed === 'fast'
+                    ? 'selected'
+                    : ''
+            }
+            onClick={() => {
+                setStorySpeed('fast');
+            }}
+        >
+            빠른
+        </button>
+
+        {/* 자연스러운 */}
+        <button
+            type="button"
+            className={
+                storySpeed === 'natural'
+                    ? 'selected'
+                    : ''
+            }
+            onClick={() => {
+                setStorySpeed('natural');
+            }}
+        >
+            자연스러운
+        </button>
+
+        {/* 느린 */}
+        <button
+            type="button"
+            className={
+                storySpeed === 'slow'
+                    ? 'selected'
+                    : ''
+            }
+            onClick={() => {
+                setStorySpeed('slow');
+            }}
+        >
+            느린
+        </button>
+
+    </div>
+
+    <p>
+    이야기에 맞춰 전개 속도를 조절해요.
+</p>
+
+</div>
+
+{/* 진행 방식 영역 끝 */}
+</div>
+
+
+{/* ==========================================
+    스토리 연출
+========================================== */}
+<div className="style-section">
+
+    <h4>스토리 연출</h4>
+
+    {/* ==========================================
+        시점
+
+        first  = 1인칭
+        second = 2인칭
+        third  = 3인칭
+    ========================================== */}
+    <div className="form-group">
+
+        <label>시점</label>
+
+        <div className="style-option-buttons">
+
+            {/* 1인칭 */}
+            <button
+                type="button"
+                className={
+                    pointOfView === 'first'
+                        ? 'selected'
+                        : ''
+                }
+                onClick={() => {
+                    setPointOfView('first');
+                }}
+            >
+                1인칭
+            </button>
+
+            {/* 2인칭 */}
+            <button
+                type="button"
+                className={
+                    pointOfView === 'second'
+                        ? 'selected'
+                        : ''
+                }
+                onClick={() => {
+                    setPointOfView('second');
+                }}
+            >
+                2인칭
+            </button>
+
+            {/* 3인칭 */}
+            <button
+                type="button"
+                className={
+                    pointOfView === 'third'
+                        ? 'selected'
+                        : ''
+                }
+                onClick={() => {
+                    setPointOfView('third');
+                }}
+            >
+                3인칭
+            </button>
+
+        </div>
+
+        <p>
+            이야기를 서술하는 시점을 선택해주세요.
+        </p>
+
+    </div>
+
+
+    {/* ==========================================
+        시제
+
+        past    = 과거
+        present = 현재
+    ========================================== */}
+    <div className="form-group">
+
+        <label>시제</label>
+
+        <div className="style-option-buttons">
+
+            {/* 과거 */}
+            <button
+                type="button"
+                className={
+                    tense === 'past'
+                        ? 'selected'
+                        : ''
+                }
+                onClick={() => {
+                    setTense('past');
+                }}
+            >
+                과거
+            </button>
+
+            {/* 현재 */}
+            <button
+                type="button"
+                className={
+                    tense === 'present'
+                        ? 'selected'
+                        : ''
+                }
+                onClick={() => {
+                    setTense('present');
+                }}
+            >
+                현재
+            </button>
+
+        </div>
+
+        <p>
+    이야기의 서술 시제를 선택해주세요.
+</p>
+
+</div>
+
+
+{/* ==========================================
+    응답 길이
+
+    short  = 짧은
+    medium = 중간
+    long   = 긴
+    auto   = 자동
+========================================== */}
+<div className="form-group">
+
+    <label>응답 길이</label>
+
+    <div className="style-option-buttons">
+
+        {/* 짧은 */}
+        <button
+            type="button"
+            className={
+                responseLength === 'short'
+                    ? 'selected'
+                    : ''
+            }
+            onClick={() => {
+                setResponseLength('short');
+            }}
+        >
+            짧은
+        </button>
+
+        {/* 중간 */}
+        <button
+            type="button"
+            className={
+                responseLength === 'medium'
+                    ? 'selected'
+                    : ''
+            }
+            onClick={() => {
+                setResponseLength('medium');
+            }}
+        >
+            중간
+        </button>
+
+        {/* 긴 */}
+        <button
+            type="button"
+            className={
+                responseLength === 'long'
+                    ? 'selected'
+                    : ''
+            }
+            onClick={() => {
+                setResponseLength('long');
+            }}
+        >
+            긴
+        </button>
+
+        {/* 자동 */}
+        <button
+            type="button"
+            className={
+                responseLength === 'auto'
+                    ? 'selected'
+                    : ''
+            }
+            onClick={() => {
+                setResponseLength('auto');
+            }}
+        >
+            자동
+        </button>
+
+    </div>
+
+    <p>
+        이야기 흐름에 맞는 응답 길이를 선택해주세요.
+    </p>
+
+</div>
+
+
+{/* ==========================================
+    표현 방식
+
+    dialogue = 대화 더하기
+    balanced = 기본
+    action   = 행동 더하기
+========================================== */}
+<div className="form-group">
+
+    <label>표현 방식</label>
+
+    <div className="style-option-buttons">
+
+        {/* 대화를 더 많이 표현 */}
+        <button
+            type="button"
+            className={
+                expressionStyle === 'dialogue'
+                    ? 'selected'
+                    : ''
+            }
+            onClick={() => {
+                setExpressionStyle('dialogue');
+            }}
+        >
+            대화 더하기
+        </button>
+
+        {/* 대화와 행동을 균형 있게 표현 */}
+        <button
+            type="button"
+            className={
+                expressionStyle === 'balanced'
+                    ? 'selected'
+                    : ''
+            }
+            onClick={() => {
+                setExpressionStyle('balanced');
+            }}
+        >
+            기본
+        </button>
+
+        {/* 행동과 묘사를 더 많이 표현 */}
+        <button
+            type="button"
+            className={
+                expressionStyle === 'action'
+                    ? 'selected'
+                    : ''
+            }
+            onClick={() => {
+                setExpressionStyle('action');
+            }}
+        >
+            행동 더하기
+        </button>
+
+    </div>
+
+    <p>
+    대사와 행동의 표현 비중을 선택해주세요.
+    </p>
+
+    </div>
+
+    {/* 스토리 연출 영역 끝 */}
+    </div>
+
+
+    {/* ==========================================
+        분위기
+
+        - 최대 2개까지 선택 가능
+        - 이미 선택한 분위기를 다시 누르면 선택 해제
+    ========================================== */}
+    <div className="style-section">
+
+        <h4>분위기 <span className="style-sub-text">(최대 2개 선택)</span></h4>
+
+        <div className="mood-buttons">
+
+            {[
+                ['romance', '로맨스'],
+                ['healing', '힐링'],
+                ['drama', '드라마'],
+                ['fantasy', '판타지'],
+                ['action', '액션'],
+                ['mystery', '미스터리'],
+                ['horror', '호러'],
+            ].map(([value, label]) => (
+
+                <button
+                    key={value}
+                    type="button"
+                    className={
+                        moods.includes(value)
+                            ? 'selected'
+                            : ''
+                    }
+                    onClick={() => {
+
+                        // 이미 선택된 분위기를 다시 누르면 선택 해제
+                        if (moods.includes(value)) {
+                            setMoods(
+                                moods.filter((mood) => mood !== value)
+                            );
+                            return;
+                        }
+
+                        // 분위기는 최대 2개까지만 선택 가능
+                        if (moods.length >= 2) {
+                            return;
+                        }
+
+                        // 선택한 분위기를 배열에 추가
+                        setMoods([
+                            ...moods,
+                            value
+                        ]);
+                    }}
+                >
+                    {label}
+                </button>
+
+            ))}
+
+        </div>
+
+    </div>
+
+
+    {/* ==========================================
+        스토리텔링 스타일
+
+        캐릭터의 성격이나 설정 자체를 바꾸는 기능이 아니라
+        AI가 이야기를 표현하고 서술하는 방식을 선택함
+    ========================================== */}
+    <div className="style-section">
+
+        <h4>스토리텔링 스타일</h4>
+
+        <div className="storytelling-style-buttons">
+
+            {[
+                ['none', '설정 안 함'],
+                ['cinematic', '시네마틱'],
+                ['literary', '문학적 서술'],
+                ['lightNovel', '라이트노벨'],
+                ['webNovel', '웹소설'],
+                ['dialogueDrama', '대화극'],
+                ['emotional', '감정 중심'],
+                ['descriptive', '묘사 중심'],
+                ['cozyDaily', '코지 데일리'],
+                ['darkNarrative', '다크 서사'],
+                ['immersiveFantasy', '몰입형 판타지'],
+                ['classicNarrative', '고전 서사'],
+            ].map(([value, label]) => (
+
+                <button
+                    key={value}
+                    type="button"
+                    className={
+                        storytellingStyle === value
+                            ? 'selected'
+                            : ''
+                    }
+                    onClick={() => {
+                        setStorytellingStyle(value);
+                    }}
+                >
+                    {label}
+                </button>
+
+            ))}
+
+        </div>
+
+        <p className="style-description">
+            캐릭터 설정은 유지하면서 이야기의 문체와 연출 방식을 조절해요.
+        </p>
+
+    </div>
+
+
+    {/* 스타일 전체 영역 끝 */}
+    </div>
+    )}
+
+                {/* ==========================================
+                    ⑭ 설정 탭
+                ========================================== */}
                 {tab === 'settings' && (
-                    <div>
-                        <h3>공개 설정</h3>
-                    </div>
-                )}
+                    <div className="settings-form">
+
+                    <h3>공개 설정</h3>
+
+        {/* ==========================================
+            공개 여부
+
+            public  = 공개
+            private = 비공개
+        ========================================== */}
+        <div className="form-group">
+
+            <label>공개 여부</label>
+
+            <div className="setting-option-buttons">
+
+                {/* 공개 버튼 */}
+                <button
+                    type="button"
+                    className={
+                        visibility === 'public'
+                            ? 'selected'
+                            : ''
+                    }
+                    onClick={() => {
+                        setVisibility('public');
+                    }}
+                >
+                    공개
+                </button>
+
+                {/* 비공개 버튼 */}
+                <button
+                    type="button"
+                    className={
+                        visibility === 'private'
+                            ? 'selected'
+                            : ''
+                    }
+                    onClick={() => {
+                        setVisibility('private');
+                    }}
+                >
+                    비공개
+                </button>
+
+            </div>
+
+            <p>
+                공개하면 다른 사용자가 캐릭터를 볼 수 있습니다.
+            </p>
+
+        </div>
+
+             {/* ==========================================
+    이용 등급
+
+    all   = 전체 이용가
+    adult = 성인 이용가
+========================================== */}
+<div className="form-group">
+
+    <label>이용 등급</label>
+
+    <div className="setting-option-buttons">
+
+        {/* 전체 이용가 버튼 */}
+        <button
+            type="button"
+            className={
+                contentRating === 'all'
+                    ? 'selected'
+                    : ''
+            }
+            onClick={() => {
+                setContentRating('all');
+            }}
+        >
+            전체 이용가
+        </button>
+
+        {/* 성인 이용가 버튼 */}
+        <button
+            type="button"
+            className={
+                contentRating === 'adult'
+                    ? 'selected'
+                    : ''
+            }
+            onClick={() => {
+                setContentRating('adult');
+            }}
+        >
+            성인 이용가
+        </button>
+
+    </div>
+
+    <p>
+        작품의 내용에 맞는 이용 등급을 선택해주세요.
+    </p>
+
+</div>       
+
+            {/* ==========================================
+    작가의 코멘트
+    - 작품을 보는 사용자에게 보여줄 짧은 설명
+    - 선택 입력
+========================================== */}
+<div className="form-group">
+
+    <label>작가의 코멘트</label>
+
+    <textarea
+        value={authorComment}
+        maxLength={500}
+        onChange={(e) => {
+            setAuthorComment(e.target.value);
+        }}
+        placeholder="작품에 대한 코멘트를 입력해주세요."
+    />
+
+    {/* 현재 입력한 글자 수 표시 */}
+    <p className="character-count">
+        {authorComment.length} / 500
+    </p>
+
+</div>
+
+    </div>
+)}
+
             </section>
             
             {/* 삭제 완료 토스트 알림 */}

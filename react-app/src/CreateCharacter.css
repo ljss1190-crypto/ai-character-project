@@ -73,7 +73,9 @@
 /* ===== ⑤ 페르소나 입력 영역 ===== */
 
 .persona-form h3,
-.story-form h3 {
+.story-form h3,
+.style-form h3,
+.settings-form h3 {
     margin: 0 0 30px;
 }
 
@@ -173,7 +175,9 @@
 
 /* 페르소나와 스토리 입력 영역 너비 */
 .persona-form,
-.story-form {
+.story-form,
+.style-form,
+.settings-form {
     width: 100%;
     max-width: 650px;
     margin: 0 auto;
@@ -416,5 +420,214 @@
 .persona-form > .character-toggle-header {
     width: 100%;
     margin-bottom: 20px;
+}
+
+/* ==========================================
+    설정 탭
+========================================== */
+
+/* 공개/비공개, 전체/성인 버튼을 가로로 배치 */
+.setting-option-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* 설정 선택 버튼 기본 상태 */
+.setting-option-buttons button {
+    padding: 10px 18px;
+    background-color: #1c1c1c;
+    color: #ffffff;
+    border: 1px solid #444444;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+/* 마우스를 올렸을 때 */
+.setting-option-buttons button:hover {
+    border-color: #c084fc;
+}
+
+/* 현재 선택된 버튼 */
+.setting-option-buttons button.selected {
+    background-color: #a855f7;
+    border-color: #a855f7;
+    color: #ffffff;
+}
+
+/* 설정 탭의 설명 문구 */
+.settings-form .form-group > p:not(.character-count) {
+    margin-top: 8px;
+    color: #888888;
+    font-size: 13px;
+}
+
+/* ==========================================
+    스타일 탭
+========================================== */
+
+/* 진행 방식 같은 큰 구역 제목 */
+.style-section h4 {
+    margin: 0 0 24px;
+    font-size: 18px;
+}
+
+/* 난이도 / 전개 속도 선택 버튼 영역 */
+.style-option-buttons {
+    display: flex;
+    width: 100%;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* 각각의 선택 버튼 */
+.style-option-buttons button {
+    flex: 1;
+
+    padding: 12px 10px;
+
+    background-color: #1c1c1c;
+    color: #aaaaaa;
+
+    border: 1px solid #333333;
+    border-radius: 8px;
+
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* 마우스를 올렸을 때 */
+.style-option-buttons button:hover {
+    color: white;
+    border-color: #c084fc;
+}
+
+/* 현재 선택된 버튼 */
+.style-option-buttons button.selected {
+    background-color: #c084fc;
+    color: white;
+    border-color: #c084fc;
+}
+
+/* ==========================================
+    분위기 선택 버튼
+========================================== */
+
+/* 분위기 버튼 전체 영역 */
+.mood-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* 분위기 버튼 기본 상태 */
+.mood-buttons button {
+    padding: 9px 16px;
+
+    background-color: #1c1c1c;
+    color: #aaaaaa;
+
+    border: 1px solid #333333;
+    border-radius: 20px;
+
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* 마우스를 올렸을 때 */
+.mood-buttons button:hover {
+    color: white;
+    border-color: #c084fc;
+}
+
+/* 선택된 분위기 */
+.mood-buttons button.selected {
+    background-color: #c084fc;
+    color: white;
+    border-color: #c084fc;
+}
+
+/* '(최대 2개 선택)' 보조 문구 */
+.style-sub-text {
+    color: #888888;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+/* ==========================================
+    스토리텔링 스타일 선택 버튼
+========================================== */
+
+/*
+    스토리텔링 스타일을 3열 형태로 배치
+
+    [설정 안 함] [시네마틱] [문학적 서술]
+    [라이트노벨] [웹소설]   [대화극]
+    ...
+*/
+.storytelling-style-buttons {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+
+    margin-top: 10px;
+}
+
+/* 스토리텔링 스타일 버튼 기본 상태 */
+.storytelling-style-buttons button {
+    width: 100%;
+    padding: 12px 10px;
+
+    background-color: #1c1c1c;
+    color: #aaaaaa;
+
+    border: 1px solid #333333;
+    border-radius: 8px;
+
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* 마우스를 올렸을 때 */
+.storytelling-style-buttons button:hover {
+    color: white;
+    border-color: #c084fc;
+}
+
+/* 현재 선택된 스토리텔링 스타일 */
+.storytelling-style-buttons button.selected {
+    background-color: #c084fc;
+    color: white;
+    border-color: #c084fc;
+}
+
+/* 스토리텔링 스타일 아래 설명 */
+.style-description {
+    margin: 12px 0 0;
+
+    color: #888888;
+    font-size: 13px;
+}
+
+/* ==========================================
+    스타일 탭 각 영역 사이 간격
+========================================== */
+
+/*
+    진행 방식 / 스토리 연출 / 분위기 /
+    스토리텔링 스타일 사이의 간격을 통일
+*/
+.style-section {
+    margin-bottom: 45px;
+}
+
+/*
+    마지막 스토리텔링 스타일 아래에는
+    불필요하게 큰 여백을 만들지 않음
+*/
+.style-section:last-child {
+    margin-bottom: 0;
 }
 
